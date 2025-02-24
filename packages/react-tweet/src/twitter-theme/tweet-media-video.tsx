@@ -3,7 +3,12 @@
 import { useState } from 'react'
 import clsx from 'clsx'
 import type { MediaAnimatedGif, MediaVideo } from '../api/index.js'
-import { EnrichedQuotedTweet, type EnrichedTweet, getMediaUrl, getMp4Video } from '../utils.js'
+import {
+  EnrichedQuotedTweet,
+  type EnrichedTweet,
+  getMediaUrl,
+  getMp4Video,
+} from '../utils.js'
 import mediaStyles from './tweet-media.module.css'
 import s from './tweet-media-video.module.css'
 
@@ -25,8 +30,8 @@ export const TweetMediaVideo = ({ tweet, media }: Props) => {
         className={mediaStyles.image}
         poster={getMediaUrl(media, 'small')}
         controls={!playButton}
-        muted
-        preload="metadata"
+        playsInline
+        preload="none"
         tabIndex={playButton ? -1 : 0}
         onPlay={() => {
           if (timeout) window.clearTimeout(timeout)
@@ -53,15 +58,24 @@ export const TweetMediaVideo = ({ tweet, media }: Props) => {
         <button
           type="button"
           className={s.videoButton}
-          aria-label="View video on Twitter"
+          aria-label="View video on X"
           onClick={(e) => {
             const video = e.currentTarget.previousSibling as HTMLMediaElement
 
             e.preventDefault()
             setPlayButton(false)
-            setIsPlaying(true)
-            video.play()
-            video.focus()
+            video.load()
+            video
+              .play()
+              .then(() => {
+                setIsPlaying(true)
+                video.focus()
+              })
+              .catch((error) => {
+                console.error('Error playing video:', error)
+                setPlayButton(true)
+                setIsPlaying(false)
+              })
           }}
         >
           <svg
@@ -84,7 +98,7 @@ export const TweetMediaVideo = ({ tweet, media }: Props) => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            {playButton ? 'Watch on Twitter' : 'Continue watching on Twitter'}
+            {playButton ? 'Watch on X' : 'Continue watching on X'}
           </a>
         </div>
       )}

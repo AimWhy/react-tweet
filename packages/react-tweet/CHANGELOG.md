@@ -1,5 +1,28 @@
 # react-tweet
 
+## 3.2.2
+
+### Patch Changes
+
+- b917cff: Fix for videos in mobile and included react 19 in peer dependencies.
+
+## 3.2.1
+
+### Patch Changes
+
+- 323e026: Added multiple improvements from community PRs:
+
+  - https://github.com/vercel/react-tweet/pull/163: Removed the date-fns dependency and made the time component a server component.
+  - https://github.com/vercel/react-tweet/pull/161: Updated media buttons to use X instead of Twitter.
+  - https://github.com/vercel/react-tweet/pull/142: Added `Hexagon` to the API types.
+  - https://github.com/vercel/react-tweet/pull/138: Add `nofollow` to tweet links.
+
+## 3.2.0
+
+### Minor Changes
+
+- 261e72d: Updated docs on caching tweets and added fetchTweet function.
+
 ## 3.1.1
 
 ### Patch Changes
